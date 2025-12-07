@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const connectDB = require('./config/database');
 require('dotenv').config();
+const path = require('path');
 
 // Connect to database
 connectDB();
@@ -13,6 +14,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from uploads directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
@@ -20,6 +24,7 @@ app.use('/api/courses', require('./routes/courses'));
 app.use('/api/transactions', require('./routes/transactions'));
 app.use('/api/certificates', require('./routes/certificates'));
 app.use('/api/organization', require('./routes/organization'));
+app.use('/api/materials', require('./routes/materials'));
 
 // Home route
 app.get('/', (req, res) => {
